@@ -1,0 +1,54 @@
+version: '3'
+name: metricore
+
+services:
+  storage:
+    image: timescale/timescaledb-ha:pg16
+    container_name: storage
+    networks:
+      net-storage:
+      net-common:
+        ipv4_address: 10.0.0.2
+    ports:
+      - "5432:5432"
+    volumes:
+      - vol-common:/common
+      - vol-storage:/var/lib/postgresql/data
+      - vol-storage:/pgdata
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  # collector:
+  #   image: imageName
+  visualization:
+    image: grafana/grafana-oss:11.2.0
+    container_name: visualization
+    networks:
+      net-visualization:
+      net-common:
+        ipv4_address: 10.0.0.3
+    ports:
+      - "3000:3000"
+    volumes:
+      - vol-common:/common
+      - vol-storage:/var/lib/grafana
+    environment:
+    - GF_INSTALL_PLUGINS=grafana-clock-panel,speakyourcode-button-panel
+
+networks:
+  net-common:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.0.0.0/8
+          gateway: 10.0.0.1
+  net-storage:
+  net-visualization:
+  net-collector:
+
+volumes:
+  vol-common:
+  vol-storage:
+  vol-visualization:
