@@ -1,0 +1,44 @@
+version: '3'
+name: metrics
+services:
+  postgres:
+    image: timescale/timescaledb-ha:pg16
+    container_name: con-postgres
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    networks:
+      net-postgresql:
+      net-common:
+        ipv4_address: 10.0.0.2
+    volumes:
+      - vol-postgres:/home/postgres/pgdata/data
+      - vol-common:/common
+  python:
+    image: gc-img-python:3.11.9-alpine
+    container_name: con-python-1
+    ports:
+      - "5127:5127"
+    networks:
+      net-common:
+        ipv4_address: 10.0.0.4
+      net-python:
+    volumes:
+      - vol-python:/data
+networks:
+  net-postgresql:
+  net-python:
+  net-common:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.0.0.0/8
+          gateway: 10.0.0.1
+volumes:
+  vol-postgres:
+  vol-common:
+  vol-python:
