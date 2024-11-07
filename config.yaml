@@ -1,0 +1,41 @@
+databases:
+  pg1:
+    dsn:
+      # postgresql+psycopg2://postgres:postgres@0.0.0.0:5432/postgres?sslmode=disable
+      driver: postgresql
+      host: 0.0.0.0
+      port: 5432
+      database: postgres
+      username: postgres
+      password: postgres
+      options:
+        sslmode: disable
+    connect-sql:
+      - "SET temp_file_limit = 10MB;"
+    keep-connected: false
+    autocommit: true
+    # labels:
+    #     environment: production
+
+metrics:
+  db_size:
+    type: gauge
+    description: Current timestamp
+    labels: [ db_name ]
+    # buckets:
+    # states:
+    # expiration: 24h
+    # increment:
+
+queries:
+  db_size:
+    databases: [ pg1 ]
+    interval: 10s
+    metrics: [ db_size ]
+    sql: |
+      select datname as db_name,
+       pg_database_size(oid) as db_size
+      from pg_database;
+    # parameters:
+    # schedule:
+    timeout: 10
