@@ -6,7 +6,7 @@ app = FastAPI()
 
 @app.get("/")
 async def root():
-    return {"Hello": "World"}
+    return {"metricore": "up and running"}
 
 
 if __name__ == "__main__":
