@@ -1,0 +1,2 @@
+TIMESTAMP_LAST = int(0b0)
+SEQUENCE_LAST = int(0b0)
