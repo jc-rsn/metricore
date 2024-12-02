@@ -1,19 +1,15 @@
-from fastapi import FastAPI
 import uvicorn
+from fastapi import FastAPI
 
-import snowflake.main as snowflake
+from snowflake import *
 
 app = FastAPI()
+app.include_router(router=snowflake)
 
 
 @app.get("/")
 async def root():
     return {"metricore": "up"}
-
-
-@app.get("/snowflake_id")
-async def get_snowflake_id():
-    return {"snowflake_id": snowflake.generate()}
 
 
 if __name__ == "__main__":
