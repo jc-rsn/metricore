@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from snowflake.snowflake import *
+from snowflake.main import *
 
 snowflake = APIRouter(
     prefix="/snowflake",

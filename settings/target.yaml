@@ -1,0 +1,35 @@
+target:
+  - name: local
+    type: postgresql
+    host: 0.0.0.0
+    port: 5432
+    db: postgres
+    user: postgres
+    pass: postgres
+  - name: local2
+    type: postgresql
+    host: 0.0.0.0
+    port: 5432
+    db: postgres
+    user: postgres
+    pass: postgres
+group:
+  - name: all
+  - name: none
+  - name: g1
+    type: postgresql
+    target:
+      - local
+      - local2
+metric:
+  - name: uptime
+    type: postgresql
+    interval: 5
+    timeout: 10
+    query: |
+      select now() as ts, current_schema as host, random() as high, 0 as low;
+    timestamp: ts
+    criteria: host
+    value: [ high, low ]
+
+
