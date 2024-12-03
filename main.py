@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from snowflake import *
 
 app = FastAPI()
-app.include_router(router=snowflake)
+app.include_router(router=snowflake_http)
 
 
 @app.get("/")

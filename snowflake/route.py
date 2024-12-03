@@ -10,4 +10,4 @@ snowflake = APIRouter(
 
 @snowflake.get("/id")
 async def snowflake_get_id():
-    return {'snowflake_id': generate()}
+    return {'id': create_snowflake_id()}
