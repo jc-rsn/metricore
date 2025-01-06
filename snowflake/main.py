@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from typing import ClassVar
 from fastapi import FastAPI, APIRouter
 import uvicorn
+from sqlalchemy.dialects.mssql.information_schema import sequences
 
 app = FastAPI()
 
@@ -25,7 +26,7 @@ async def get_id():
 
 @dataclass(frozen=True)
 class SnowflakeConstant:
-    base_epoch: int = 0
+    base_epoch: int = 1735675199000
     max_timestamp: int = int(0b11111111111111111111111111111111111111111)
     max_node: int = int(0b1111111111)
     max_sequence: int = int(0b111111111111)
