@@ -1,1 +1,1 @@
-from snowflake.route import snowflake as snowflake_http
+import main
