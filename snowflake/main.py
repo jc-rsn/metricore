@@ -46,8 +46,8 @@ def create_snowflake() -> int:
     if timestamp == SnowflakeState.last_timestamp:
         SnowflakeState.last_sequence = (SnowflakeState.last_sequence + 1) & SnowflakeComponents.max_sequence
 
-    if SnowflakeState.last_sequence == 0:
-        raise ValueError(f"sequence cannot be negative and must be less than {SnowflakeComponents.max_sequence}")
+        if SnowflakeState.last_sequence == 0:
+            raise ValueError(f"sequence cannot be negative and must be less than {SnowflakeComponents.max_sequence}")
     else:
         SnowflakeState.last_sequence = 0
         SnowflakeState.last_timestamp = timestamp
